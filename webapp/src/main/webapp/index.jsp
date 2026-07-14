@@ -1,1 +1,1 @@
-Hello, Welcome to our company
+Hello, Welcome We're glad to have you here
