@@ -8,6 +8,7 @@ stages:
       steps:
       - bash: echo Build Second Job
 - stage: DevDeploy
+  dependsOn: Build
   jobs:
     - job: DevFist
       steps:
@@ -16,11 +17,15 @@ stages:
       steps:
       - bash: echo Dev Second Job
 - stage: QADeploy
+  dependsOn: Build
   jobs:
     - job: QAJob
       steps:
       - bash: echo QA First Job
 - stage: ProdDeploy
+  dependsOn:
+  - DevDeploy
+  - QADeploy
   jobs:
     - job: ProductionsJob
       steps:
