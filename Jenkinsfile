@@ -27,26 +27,32 @@ pipeline {
 }
 
 
-        stage('Docker Hub Login and Push') {
-            steps {
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: 'dockerhub-creds',
-                        usernameVariable: 'DOCKER_USER',
-                        passwordVariable: 'DOCKER_TOKEN'
-                    )
-                ]) {
-                    bat '''
-                        @echo off
-                        echo %DOCKER_TOKEN% | docker login -u %DOCKER_USER% --password-stdin
-                        if errorlevel 1 exit /b 1
-                        docker push %IMAGE_NAME%:%BUILD_NUMBER%
-                        if errorlevel 1 exit /b 1
-                        docker logout
-                    '''
-                }
-            }
+        
+stage('Docker Hub Login and Push') {
+    steps {
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'dockerhub-creds',
+                usernameVariable: 'DOCKER_USER',
+                passwordVariable: 'DOCKER_TOKEN'
+            )
+        ]) {
+            bat '''
+                @echo off
+                set "DOCKER_EXE=C:\\Users\\jonna\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe"
+
+                echo %DOCKER_TOKEN% | "%DOCKER_EXE%" login -u %DOCKER_USER% --password-stdin
+                if errorlevel 1 exit /b 1
+
+                "%DOCKER_EXE%" push %IMAGE_NAME%:%BUILD_NUMBER%
+                if errorlevel 1 exit /b 1
+
+                "%DOCKER_EXE%" logout
+            '''
         }
+    }
+}
+
 
         stage('Deploy to Kubernetes') {
             steps {
