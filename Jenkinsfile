@@ -41,6 +41,9 @@ stage('Docker Hub Login and Push') {
                 @echo off
                 set "DOCKER_EXE=C:\\Users\\jonna\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe"
 
+                "%DOCKER_EXE%" version
+                if errorlevel 1 exit /b 1
+
                 echo %DOCKER_TOKEN% | "%DOCKER_EXE%" login -u %DOCKER_USER% --password-stdin
                 if errorlevel 1 exit /b 1
 
@@ -52,7 +55,6 @@ stage('Docker Hub Login and Push') {
         }
     }
 }
-
 
         stage('Deploy to Kubernetes') {
             steps {
