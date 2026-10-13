@@ -19,11 +19,13 @@ pipeline {
             }
         }
 
+        
         stage('Docker Build') {
-            steps {
-                bat 'docker build -t %IMAGE_NAME%:%BUILD_NUMBER% .'
-            }
-        }
+             steps {
+                bat '"C:\\Users\\jonna\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t %IMAGE_NAME%:%BUILD_NUMBER% .'
+    }
+}
+
 
         stage('Docker Hub Login and Push') {
             steps {
