@@ -1,0 +1,20 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcatwebapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcatwebapp
+  template:
+    metadata:
+      labels:
+        app: tomcatwebapp
+    spec:
+      containers:
+        - name: tomcatwebapp
+          image: vinay0650/maven-k8s-app:latest
+          ports:
+            - containerPort: 8080
