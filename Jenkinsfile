@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'vinay0650/newubuntu'
+        IMAGE_NAME = 'vinay0650/maven-k8s-app'
     }
 
     stages {
